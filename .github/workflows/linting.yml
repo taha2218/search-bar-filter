@@ -1,0 +1,28 @@
+name: Run Lint on Push and Merge
+
+on:
+  push:
+    branches:
+      - "*" # Trigger on push events to any branch
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  lint:
+    runs-on: windows-latest # Specify Windows as the runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16.x" # Use the required Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Lint
+        run: npm run lint
